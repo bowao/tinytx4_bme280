@@ -116,6 +116,7 @@ void BME280setup () {
   Wire.write(0b001);                            // Humidity oversampling x1
   Wire.write(0xF4);                             // ctrl_meas
   Wire.write(0b00100101);                       // Temperatur and Pressure oversampling x1, Forced mode
+  delay(10);                                    // Allow 10ms for the sensor to measure (depends on oversampling)
   // Read the chip calibrations.
   Wire.write(0x88);
   Wire.endTransmission();
@@ -147,6 +148,7 @@ void BME280remeasure() {
   Wire.write(0xF4);                             // ctrl_meas
   Wire.write(0b00100101);                       // Temperatur and Pressure oversampling x1, Forced mode
   Wire.endTransmission();
+  delay(10);                                    // Allow 10ms for the sensor to measure (depends on oversampling)
 }
 
 // Returns temperature in DegC, resolution is 0.01 DegC
@@ -339,7 +341,7 @@ void loop() {
     //activityLed(1);  // LED on
     pinMode(BME280_POWER, OUTPUT);  // set power pin for Sensor to output
     digitalWrite(BME280_POWER, HIGH); // turn Sensor on
-    delay(500); // Allow 500ms for the sensor to be ready
+    delay(50); // Allow 50ms for the sensor to be ready
     enableADC(true); // power up/enable the ADC
 
     BME280setup();
